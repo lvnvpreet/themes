@@ -1,0 +1,170 @@
+<!-- Fixed themes/health-wellness-theme/layouts/partials/head.html -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+
+<!-- Enhanced SEO Meta Tags -->
+{{ with .Site.Params.keywords }}
+<meta name="keywords" content="{{ delimit . "," }}{{ if $.Params.tags }}, {{ delimit $.Params.tags "," }}{{ end }}">
+{{ end }}
+{{ with .Site.Params.author }}
+<meta name="author" content="{{ . }}">
+{{ end }}
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="{{ .Permalink }}">
+
+<!-- Open Graph Meta Tags -->
+<meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}">
+<meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+<meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:site_name" content="{{ .Site.Title }}">
+{{ if .Params.featured_image }}
+<meta property="og:image" content="{{ .Params.featured_image | absURL }}">
+<meta property="og:image:alt" content="{{ .Title }}">
+{{ else }}
+<meta property="og:image" content="{{ "/images/logo.png" | absURL }}">
+{{ end }}
+
+<!-- Twitter Card Meta Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}">
+<meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+{{ if .Params.featured_image }}
+<meta name="twitter:image" content="{{ .Params.featured_image | absURL }}">
+{{ end }}
+
+<!-- Favicon and Icons -->
+<link rel="icon" type="image/x-icon" href="{{ "images/favicon.ico" | relURL }}">
+
+<!-- Preload Critical Resources -->
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
+
+<!-- Critical CSS inline -->
+<style>
+/* Critical CSS - inline only essential styles */
+body { 
+    font-family: 'Inter', sans-serif; 
+    margin: 0; 
+    line-height: 1.6;
+    color: #333;
+}
+.main-header { 
+    position: sticky; 
+    top: 0; 
+    z-index: 1000; 
+    background: white; 
+    box-shadow: 0 2px 20px rgba(0,0,0,0.1); 
+}
+.hero-section { 
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+}
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 20px; 
+}
+</style>
+
+<!-- Load non-critical CSS asynchronously -->
+<link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<!-- Structured Data for Homepage -->
+{{ if .IsHome }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DentalClinic",
+  "name": "{{ .Site.Title }}",
+  "description": "{{ .Site.Params.description }}",
+  "url": "{{ .Site.BaseURL }}",
+  {{ with .Site.Params.phone }}
+  "telephone": "{{ . }}",
+  {{ end }}
+  {{ with .Site.Params.address }}
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "{{ . }}",
+    "addressLocality": "New York",
+    "addressRegion": "NY",
+    "postalCode": "10001",
+    "addressCountry": "US"
+  },
+  {{ end }}
+  "openingHours": [
+    "Mo-Fr 08:00-18:00",
+    "Sa 09:00-14:00"
+  ],
+  "priceRange": "$$"
+  {{ with .Site.Params.social.facebook }},
+  "sameAs": [
+    "{{ . }}"{{ with $.Site.Params.social.twitter }},
+    "{{ . }}"{{ end }}{{ with $.Site.Params.social.instagram }},
+    "{{ . }}"{{ end }}{{ with $.Site.Params.social.linkedin }},
+    "{{ . }}"{{ end }}
+  ]
+  {{ end }}
+}
+</script>
+{{ end }}
+
+<!-- Article Structured Data -->
+{{ if and (not .IsHome) (eq .Section "blog") }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{ .Title }}",
+  {{ with .Description }}
+  "description": "{{ . }}",
+  {{ end }}
+  "author": {
+    "@type": "Organization",
+    "name": "{{ .Site.Title }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "{{ .Site.Title }}"{{ with .Site.Params.logo }},
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ . | absURL }}"
+    }{{ end }}
+  },
+  "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
+  "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}"{{ with .Params.featured_image }},
+  "image": "{{ . | absURL }}"{{ end }},
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ .Permalink }}"
+  }
+}
+</script>
+{{ end }}
+
+<!-- Performance and Analytics -->
+{{ if hugo.IsProduction }}
+<!-- Only load analytics in production -->
+<!-- Uncomment and replace with your actual Google Analytics tracking ID -->
+<!--
+<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'GA_MEASUREMENT_ID');
+</script>
+-->
+{{ end }}
+
+<!-- Preconnect to external domains for performance -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">

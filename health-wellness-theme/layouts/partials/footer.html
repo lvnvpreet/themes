@@ -1,0 +1,88 @@
+<footer class="main-footer">
+    <div class="container">
+        <div class="footer-content">
+            <!-- Column 1: Company Info -->
+            <div class="footer-column">
+                <div class="footer-logo">
+                    {{ if .Site.Params.logo }}
+                        <img src="{{ .Site.Params.logo }}" alt="{{ .Site.Title }}">
+                    {{ else }}
+                        <h3>{{ .Site.Title }}</h3>
+                    {{ end }}
+                </div>
+                <p>{{ .Site.Params.description | default "Your trusted partner in health and wellness. Providing quality care with compassion and expertise." }}</p>
+                <div class="social-links">
+                    {{ with .Site.Params.social.facebook }}<a href="{{ . }}" target="_blank"><i class="fab fa-facebook"></i></a>{{ end }}
+                    {{ with .Site.Params.social.twitter }}<a href="{{ . }}" target="_blank"><i class="fab fa-twitter"></i></a>{{ end }}
+                    {{ with .Site.Params.social.instagram }}<a href="{{ . }}" target="_blank"><i class="fab fa-instagram"></i></a>{{ end }}
+                    {{ with .Site.Params.social.linkedin }}<a href="{{ . }}" target="_blank"><i class="fab fa-linkedin"></i></a>{{ end }}
+                </div>
+            </div>
+
+            <!-- Column 2: Quick Links -->
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="{{ .Site.BaseURL }}">Home</a></li>
+                    <li><a href="{{ "about" | relURL }}">About Us</a></li>
+                    <li><a href="{{ "services" | relURL }}">Our Services</a></li>
+                    <li><a href="{{ "contact" | relURL }}">Contact</a></li>
+                    <li><a href="{{ "blog" | relURL }}">Health Blog</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 3: Services -->
+            <div class="footer-column">
+                <h4>Our Services</h4>
+                <ul>
+                    {{ range .Site.Params.footer_services }}
+                    <li><a href="{{ .url }}">{{ .name }}</a></li>
+                    {{ end }}
+                </ul>
+            </div>
+
+            <!-- Column 4: Contact Info -->
+            <div class="footer-column">
+                <h4>Contact Information</h4>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>{{ .Site.Params.address }}</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span><a href="tel:{{ .Site.Params.phone }}">{{ .Site.Params.phone }}</a></span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span><a href="mailto:{{ .Site.Params.email }}">{{ .Site.Params.email }}</a></span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <span>{{ .Site.Params.hours }}</span>
+                    </div>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="newsletter">
+                    <h5>Newsletter</h5>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="copyright">
+                <p>&copy; {{ now.Year }} {{ .Site.Title }}. All rights reserved.</p>
+            </div>
+            <div class="footer-links">
+                <a href="{{ "privacy" | relURL }}">Privacy Policy</a>
+                <a href="{{ "terms" | relURL }}">Terms of Service</a>
+                <a href="{{ "sitemap.xml" | relURL }}">Sitemap</a>
+            </div>
+        </div>
+    </div>
+</footer>

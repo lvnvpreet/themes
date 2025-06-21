@@ -1,0 +1,18 @@
+{{ define "main" }}
+<div class="page-header">
+    <div class="container">
+        <h1>{{ .Title }}</h1>
+        {{ if .Params.description }}
+        <p class="page-description">{{ .Params.description }}</p>
+        {{ end }}
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="container">
+        <div class="content-wrapper">
+            {{ .Content }}
+        </div>
+    </div>
+</div>
+{{ end }}

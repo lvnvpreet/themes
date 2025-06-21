@@ -1,0 +1,77 @@
+<header class="main-header">
+    <!-- Top Header Bar -->
+    <div class="top-header-bar">
+        <div class="container">
+            <div class="top-header-content">
+                <div class="top-left">
+                    <a href="{{ "contact" | relURL }}#directions" aria-label="How to Find Us">How to Find Us</a>
+                    <span class="separator">|</span>
+                    <a href="{{ "contact" | relURL }}#feedback" aria-label="Give Us Feedback">Give Us Feedback</a>
+                </div>
+                <div class="top-center">
+                    <i class="fas fa-phone-alt" aria-hidden="true"></i>
+                    <strong>Emergency: {{ .Site.Params.emergency_phone | default "+1-234-567-8911" }}</strong>
+                </div>
+                <div class="top-right">
+                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                    <a href="mailto:{{ .Site.Params.email }}" aria-label="Email us">{{ .Site.Params.email | default "info@stardentic.com" }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <div class="main-header-section">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="{{ .Site.BaseURL }}" aria-label="StarDentic Home">
+                        {{ if .Site.Params.logo }}
+                            <img src="{{ .Site.Params.logo }}" alt="{{ .Site.Title }}" width="180" height="50">
+                        {{ else }}
+                            <h2>{{ .Site.Title }}</h2>
+                        {{ end }}
+                    </a>
+                </div>
+                
+                <nav class="main-navigation" role="navigation" aria-label="Main navigation">
+                    {{ partial "navigation.html" . }}
+                </nav>
+                
+                <div class="header-search">
+                    <form class="search-form" action="{{ "search" | relURL }}" method="GET" role="search">
+                        <label for="search-input" class="sr-only">Search</label>
+                        <input type="search" id="search-input" placeholder="Search..." name="q" aria-label="Search">
+                        <button type="submit" aria-label="Submit search"><i class="fas fa-search" aria-hidden="true"></i></button>
+                    </form>
+                </div>
+                
+                <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Header Bar -->
+    <div class="contact-header-bar">
+        <div class="container">
+            <div class="contact-header-content">
+                <div class="contact-left">
+                    <i class="fas fa-phone" aria-hidden="true"></i>
+                    <span>Call Us <a href="tel:{{ .Site.Params.phone }}">{{ .Site.Params.phone | default "+1-234-567-8900" }}</a></span>
+                </div>
+                <div class="contact-center">
+                    <i class="fas fa-clock" aria-hidden="true"></i>
+                    <span>{{ .Site.Params.hours | default "Mon-Fri: 8:00AM - 6:00PM, Sat: 9:00AM - 2:00PM, Sun: Closed" }}</span>
+                </div>
+                <div class="contact-right">
+                    <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                    <span>{{ .Site.Params.address | default "123 Dental Street, Medical District, NY 10001" }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

@@ -1,0 +1,16 @@
+<ul class="nav-menu">
+    <li><a href="{{ .Site.BaseURL }}" {{ if .IsHome }}class="active"{{ end }}>Home</a></li>
+    <li><a href="{{ "about" | relURL }}" {{ if eq .Section "about" }}class="active"{{ end }}>About</a></li>
+    <li class="dropdown">
+        <a href="{{ "services" | relURL }}" {{ if eq .Section "services" }}class="active"{{ end }}>
+            Services <i class="fas fa-chevron-down"></i>
+        </a>
+        <ul class="dropdown-menu">
+            {{ range .Site.Params.service_menu }}
+            <li><a href="{{ .url }}">{{ .name }}</a></li>
+            {{ end }}
+        </ul>
+    </li>
+    <li><a href="{{ "contact" | relURL }}" {{ if eq .Section "contact" }}class="active"{{ end }}>Contact</a></li>
+    <li><a href="{{ "blog" | relURL }}" {{ if eq .Section "blog" }}class="active"{{ end }}>Blog</a></li>
+</ul>

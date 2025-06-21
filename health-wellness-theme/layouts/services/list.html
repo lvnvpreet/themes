@@ -1,0 +1,161 @@
+{{ define "main" }}
+<div class="page-header services-header">
+    <div class="container">
+        <h1>{{ .Title }}</h1>
+        {{ if .Params.description }}
+        <p class="page-description">{{ .Params.description }}</p>
+        {{ end }}
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="container">
+        <!-- Services Overview -->
+        <section class="services-overview">
+            {{ .Content }}
+        </section>
+
+        <!-- Services Grid -->
+        <section class="services-grid-section">
+            <div class="services-grid">
+                {{ range .Site.Params.all_services }}
+                <div class="service-card detailed">
+                    <div class="service-image">
+                        {{ if .image }}
+                        <img src="{{ .image }}" alt="{{ .title }}">
+                        {{ else }}
+                        <div class="service-icon-large">
+                            <i class="{{ .icon }}"></i>
+                        </div>
+                        {{ end }}
+                    </div>
+                    <div class="service-content">
+                        <h3>{{ .title }}</h3>
+                        <p>{{ .description }}</p>
+                        {{ if .features }}
+                        <ul class="service-features">
+                            {{ range .features }}
+                            <li><i class="fas fa-check"></i> {{ . }}</li>
+                            {{ end }}
+                        </ul>
+                        {{ end }}
+                        <div class="service-meta">
+                            {{ if .duration }}
+                            <span><i class="fas fa-clock"></i> {{ .duration }}</span>
+                            {{ end }}
+                            {{ if .price }}
+                            <span class="price">From {{ .price }}</span>
+                            {{ end }}
+                        </div>
+                        <div class="service-actions">
+                            {{ if .url }}
+                            <a href="{{ .url }}" class="btn btn-outline">Learn More</a>
+                            {{ end }}
+                            <a href="{{ "contact" | relURL }}?service={{ .title | urlize }}" class="btn btn-primary">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </section>
+
+        <!-- Service Categories -->
+        {{ if .Site.Params.service_categories }}
+        <section class="service-categories">
+            <div class="section-header">
+                <h2>Service Categories</h2>
+                <p>Organized by specialty</p>
+            </div>
+            <div class="categories-grid">
+                {{ range .Site.Params.service_categories }}
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="{{ .icon }}"></i>
+                    </div>
+                    <h3>{{ .name }}</h3>
+                    <p>{{ .description }}</p>
+                    <ul class="category-services">
+                        {{ range .services }}
+                        <li>{{ . }}</li>
+                        {{ end }}
+                    </ul>
+                    {{ if .url }}
+                    <a href="{{ .url }}" class="btn btn-outline">View Services</a>
+                    {{ end }}
+                </div>
+                {{ end }}
+            </div>
+        </section>
+        {{ end }}
+
+        <!-- Services FAQ -->
+        {{ if .Site.Params.services_faq }}
+        <section class="services-faq">
+            <div class="section-header">
+                <h2>Services FAQ</h2>
+                <p>Common questions about our services</p>
+            </div>
+            <div class="faq-container">
+                {{ range .Site.Params.services_faq }}
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>{{ .question }}</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>{{ .answer }}</p>
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </section>
+        {{ end }}
+
+        <!-- Insurance Information -->
+        {{ if .Site.Params.insurance_info }}
+        <section class="insurance-section">
+            <div class="section-header">
+                <h2>Insurance & Payment</h2>
+                <p>We accept various insurance plans and payment options</p>
+            </div>
+            <div class="insurance-content">
+                <div class="insurance-accepted">
+                    <h3>Accepted Insurance Plans</h3>
+                    <div class="insurance-grid">
+                        {{ range .Site.Params.insurance_plans }}
+                        <div class="insurance-item">
+                            {{ if .logo }}
+                            <img src="{{ .logo }}" alt="{{ .name }}">
+                            {{ else }}
+                            <span>{{ .name }}</span>
+                            {{ end }}
+                        </div>
+                        {{ end }}
+                    </div>
+                </div>
+                <div class="payment-options">
+                    <h3>Payment Options</h3>
+                    <ul class="payment-list">
+                        {{ range .Site.Params.payment_options }}
+                        <li><i class="fas fa-check"></i> {{ . }}</li>
+                        {{ end }}
+                    </ul>
+                </div>
+            </div>
+        </section>
+        {{ end }}
+
+        <!-- Appointment Booking CTA -->
+        <section class="services-cta">
+            <div class="cta-content">
+                <h2>Ready to Schedule Your Appointment?</h2>
+                <p>Our team is ready to provide you with the best healthcare services. Contact us today to book your consultation.</p>
+                <div class="cta-buttons">
+                    <a href="{{ "contact" | relURL }}" class="btn btn-primary">Book Appointment</a>
+                    <a href="tel:{{ .Site.Params.phone }}" class="btn btn-outline">Call Now</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+{{ end }}

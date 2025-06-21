@@ -1,0 +1,12 @@
+name = "Health & Wellness Pro"
+license = "MIT"
+licenselink = "https://github.com/yourname/theme-name/blob/master/LICENSE"
+description = "A modern, responsive Hugo theme for health and wellness businesses"
+homepage = "https://github.com/yourname/theme-name"
+tags = ["health", "wellness", "medical", "dental", "business", "responsive", "modern"]
+features = ["responsive", "blog", "contact-form", "seo", "appointments"]
+min_version = "0.74.0"
+
+[author]
+  name = "Lovepreet Singh"
+  homepage = "https://yourwebsite.com"

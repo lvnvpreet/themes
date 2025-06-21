@@ -1,0 +1,252 @@
+{{ define "main" }}
+<div class="page-header service-header">
+    <div class="container">
+        <div class="service-header-content">
+            <div class="service-header-text">
+                <h1>{{ .Title }}</h1>
+                {{ if .Params.description }}
+                <p class="page-description">{{ .Params.description }}</p>
+                {{ end }}
+                {{ if .Params.price }}
+                <div class="service-price">
+                    <span class="price-label">Starting from</span>
+                    <span class="price">{{ .Params.price }}</span>
+                </div>
+                {{ end }}
+            </div>
+            {{ if .Params.featured_image }}
+            <div class="service-header-image">
+                <img src="{{ .Params.featured_image }}" alt="{{ .Title }}">
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="container">
+        <div class="service-content-wrapper">
+            <!-- Main Content -->
+            <div class="service-main-content">
+                <article class="service-article">
+                    {{ .Content }}
+                </article>
+
+                <!-- Service Features -->
+                {{ if .Params.features }}
+                <section class="service-features">
+                    <h2>What's Included</h2>
+                    <ul class="features-list">
+                        {{ range .Params.features }}
+                        <li><i class="fas fa-check"></i> {{ . }}</li>
+                        {{ end }}
+                    </ul>
+                </section>
+                {{ end }}
+
+                <!-- Procedure Steps -->
+                {{ if .Params.procedure_steps }}
+                <section class="procedure-steps">
+                    <h2>How It Works</h2>
+                    <div class="steps-grid">
+                        {{ range $index, $step := .Params.procedure_steps }}
+                        <div class="step-card">
+                            <div class="step-number">{{ add $index 1 }}</div>
+                            <h3>{{ $step.title }}</h3>
+                            <p>{{ $step.description }}</p>
+                        </div>
+                        {{ end }}
+                    </div>
+                </section>
+                {{ end }}
+
+                <!-- Benefits -->
+                {{ if .Params.benefits }}
+                <section class="service-benefits">
+                    <h2>Benefits</h2>
+                    <div class="benefits-grid">
+                        {{ range .Params.benefits }}
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <i class="{{ .icon | default "fas fa-star" }}"></i>
+                            </div>
+                            <h3>{{ .title }}</h3>
+                            <p>{{ .description }}</p>
+                        </div>
+                        {{ end }}
+                    </div>
+                </section>
+                {{ end }}
+
+                <!-- Before & After Care -->
+                {{ if or .Params.before_care .Params.after_care }}
+                <section class="care-instructions">
+                    <div class="care-grid">
+                        {{ if .Params.before_care }}
+                        <div class="care-card">
+                            <h3><i class="fas fa-calendar-minus"></i> Before Your Visit</h3>
+                            <ul>
+                                {{ range .Params.before_care }}
+                                <li>{{ . }}</li>
+                                {{ end }}
+                            </ul>
+                        </div>
+                        {{ end }}
+
+                        {{ if .Params.after_care }}
+                        <div class="care-card">
+                            <h3><i class="fas fa-calendar-plus"></i> After Your Treatment</h3>
+                            <ul>
+                                {{ range .Params.after_care }}
+                                <li>{{ . }}</li>
+                                {{ end }}
+                            </ul>
+                        </div>
+                        {{ end }}
+                    </div>
+                </section>
+                {{ end }}
+
+                <!-- FAQ for this service -->
+                {{ if .Params.faq }}
+                <section class="service-faq">
+                    <h2>Frequently Asked Questions</h2>
+                    <div class="faq-container">
+                        {{ range .Params.faq }}
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <h3>{{ .question }}</h3>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p>{{ .answer }}</p>
+                            </div>
+                        </div>
+                        {{ end }}
+                    </div>
+                </section>
+                {{ end }}
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="service-sidebar">
+                <!-- Booking Card -->
+                <div class="booking-card">
+                    <h3>Book This Service</h3>
+                    {{ if .Params.duration }}
+                    <div class="service-meta">
+                        <i class="fas fa-clock"></i>
+                        <span>Duration: {{ .Params.duration }}</span>
+                    </div>
+                    {{ end }}
+                    {{ if .Params.price }}
+                    <div class="service-price-display">
+                        <span class="price">{{ .Params.price }}</span>
+                    </div>
+                    {{ end }}
+                    <form class="quick-booking-form">
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Email Address" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" placeholder="Phone Number" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="date" required>
+                        </div>
+                        <div class="form-group">
+                            <select required>
+                                <option value="">Preferred Time</option>
+                                <option value="9:00 AM">9:00 AM</option>
+                                <option value="10:00 AM">10:00 AM</option>
+                                <option value="11:00 AM">11:00 AM</option>
+                                <option value="2:00 PM">2:00 PM</option>
+                                <option value="3:00 PM">3:00 PM</option>
+                                <option value="4:00 PM">4:00 PM</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">Book Appointment</button>
+                    </form>
+                    <div class="contact-alternative">
+                        <p>Or call us directly</p>
+                        <a href="tel:{{ .Site.Params.phone }}" class="phone-link">
+                            <i class="fas fa-phone"></i> {{ .Site.Params.phone }}
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Related Services -->
+                {{ if .Site.Params.related_services }}
+                <div class="related-services">
+                    <h3>Related Services</h3>
+                    <ul class="related-list">
+                        {{ range .Site.Params.related_services }}
+                        <li>
+                            <a href="{{ .url }}">
+                                <i class="{{ .icon }}"></i>
+                                <span>{{ .title }}</span>
+                            </a>
+                        </li>
+                        {{ end }}
+                    </ul>
+                </div>
+                {{ end }}
+
+                <!-- Contact Info -->
+                <div class="contact-card">
+                    <h3>Questions?</h3>
+                    <p>Our team is here to help you with any questions about this service.</p>
+                    <div class="contact-methods">
+                        <a href="tel:{{ .Site.Params.phone }}" class="contact-method">
+                            <i class="fas fa-phone"></i>
+                            <span>{{ .Site.Params.phone }}</span>
+                        </a>
+                        <a href="mailto:{{ .Site.Params.email }}" class="contact-method">
+                            <i class="fas fa-envelope"></i>
+                            <span>{{ .Site.Params.email }}</span>
+                        </a>
+                        <a href="{{ "contact" | relURL }}" class="contact-method">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Visit Our Office</span>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Testimonials for this service -->
+        {{ if .Params.testimonials }}
+        <section class="service-testimonials">
+            <div class="section-header">
+                <h2>What Patients Say</h2>
+                <p>Real experiences from patients who received this service</p>
+            </div>
+            <div class="testimonials-grid">
+                {{ range .Params.testimonials }}
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="stars">
+                            {{ range seq .rating }}
+                            <i class="fas fa-star"></i>
+                            {{ end }}
+                        </div>
+                        <p>"{{ .content }}"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="{{ .image }}" alt="{{ .name }}">
+                        <div class="author-info">
+                            <h4>{{ .name }}</h4>
+                            <span>{{ .title }}</span>
+                        </div>
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </section>
+        {{ end }}
+    </div>
+</div>
+{{ end }}

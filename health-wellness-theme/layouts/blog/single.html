@@ -1,0 +1,199 @@
+{{ define "main" }}
+<!-- Include blog-specific CSS -->
+<link rel="stylesheet" href="{{ "css/blog-theme.css" | relURL }}">
+
+<div class="page-header blog-header">
+    <div class="container">
+        <div class="post-header-content">
+            <div class="post-meta">
+                {{ if .Params.category }}
+                <a href="/categories/{{ .Params.category | urlize }}" class="post-category">
+                    <i class="fas fa-folder"></i>
+                    {{ .Params.category }}
+                </a>
+                {{ end }}
+                <span class="post-date">
+                    <i class="fas fa-calendar-alt"></i>
+                    {{ .Date.Format "January 2, 2006" }}
+                </span>
+                {{ if .Params.author }}
+                <span class="post-author">
+                    <i class="fas fa-user"></i>
+                    By {{ .Params.author }}
+                </span>
+                {{ end }}
+                {{ if .Params.read_time }}
+                <span class="read-time">
+                    <i class="fas fa-clock"></i>
+                    {{ .Params.read_time }} min read
+                </span>
+                {{ end }}
+            </div>
+            <h1>{{ .Title }}</h1>
+            {{ if .Params.description }}
+            <p class="post-description">{{ .Params.description }}</p>
+            {{ end }}
+        </div>
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="container">
+        <div class="blog-post-layout">
+            <!-- Main Content -->
+            <article class="blog-post-main">
+                {{ if .Params.featured_image }}
+                <div class="post-featured-image">
+                    <img src="{{ .Params.featured_image }}" alt="{{ .Title }}">
+                </div>
+                {{ end }}
+
+                <div class="post-content">
+                    {{ .Content }}
+                </div>
+
+                <!-- Post Tags -->
+                {{ if .Params.tags }}
+                <div class="post-tags">
+                    <h4>Tags:</h4>
+                    <div class="tags-list">
+                        {{ range .Params.tags }}
+                        <a href="/tags/{{ . | urlize }}" class="tag">#{{ . }}</a>
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+
+                <!-- Author Bio -->
+                {{ if .Params.author_bio }}
+                <div class="author-bio">
+                    <div class="author-info">
+                        {{ if .Params.author_image }}
+                        <img src="{{ .Params.author_image }}" alt="{{ .Params.author }}" class="author-avatar">
+                        {{ end }}
+                        <div class="author-details">
+                            <h4>About {{ .Params.author | default "the Author" }}</h4>
+                            <p>{{ .Params.author_bio }}</p>
+                            {{ if .Params.author_social }}
+                            <div class="author-social">
+                                {{ with .Params.author_social.twitter }}<a href="{{ . }}" target="_blank"><i class="fab fa-twitter"></i></a>{{ end }}
+                                {{ with .Params.author_social.linkedin }}<a href="{{ . }}" target="_blank"><i class="fab fa-linkedin"></i></a>{{ end }}
+                                {{ with .Params.author_social.email }}<a href="mailto:{{ . }}"><i class="fas fa-envelope"></i></a>{{ end }}
+                            </div>
+                            {{ end }}
+                        </div>
+                    </div>
+                </div>
+                {{ end }}
+
+                <!-- Social Sharing -->
+                <div class="social-sharing">
+                    <h4>Share this article:</h4>
+                    <div class="share-buttons">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ .Permalink }}" target="_blank" class="share-btn facebook">
+                            <i class="fab fa-facebook"></i> Facebook
+                        </a>
+                        <a href="https://twitter.com/intent/tweet?url={{ .Permalink }}&text={{ .Title }}" target="_blank" class="share-btn twitter">
+                            <i class="fab fa-twitter"></i> Twitter
+                        </a>
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ .Permalink }}" target="_blank" class="share-btn linkedin">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                        <a href="mailto:?subject={{ .Title }}&body=Check out this article: {{ .Permalink }}" class="share-btn email">
+                            <i class="fas fa-envelope"></i> Email
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Post Navigation -->
+                <nav class="post-navigation">
+                    {{ with .PrevInSection }}
+                    <div class="nav-previous">
+                        <a href="{{ .Permalink }}">
+                            <span class="nav-label">Previous Article</span>
+                            <span class="nav-title">{{ .Title }}</span>
+                        </a>
+                    </div>
+                    {{ end }}
+                    {{ with .NextInSection }}
+                    <div class="nav-next">
+                        <a href="{{ .Permalink }}">
+                            <span class="nav-label">Next Article</span>
+                            <span class="nav-title">{{ .Title }}</span>
+                        </a>
+                    </div>
+                    {{ end }}
+                </nav>
+            </article>
+
+            <!-- Sidebar -->
+            <aside class="blog-post-sidebar">
+                <!-- Table of Contents -->
+                <div class="sidebar-widget toc-widget">
+                    <h3>Table of Contents</h3>
+                    <div class="toc-content">
+                        {{ .TableOfContents }}
+                    </div>
+                </div>
+
+                <!-- Related Posts -->
+                <div class="sidebar-widget related-posts-widget">
+                    <h3>Related Articles</h3>
+                    <div class="related-posts">
+                        {{ $related := .Site.RegularPages.Related . | first 3 }}
+                        {{ range $related }}
+                        <article class="related-post">
+                            {{ if .Params.featured_image }}
+                            <div class="related-post-image">
+                                <img src="{{ .Params.featured_image }}" alt="{{ .Title }}">
+                            </div>
+                            {{ end }}
+                            <div class="related-post-content">
+                                <h4><a href="{{ .Permalink }}">{{ .Title }}</a></h4>
+                                <span class="related-post-date">{{ .Date.Format "Jan 2, 2006" }}</span>
+                            </div>
+                        </article>
+                        {{ end }}
+                    </div>
+                </div>
+
+                <!-- Quick Contact -->
+                <div class="sidebar-widget contact-widget">
+                    <h3>Have Questions?</h3>
+                    <p>Our team is here to help with any health-related questions.</p>
+                    <div class="quick-contact">
+                        <a href="tel:{{ .Site.Params.phone }}" class="contact-btn">
+                            <i class="fas fa-phone"></i> Call Us
+                        </a>
+                        <a href="{{ "contact" | relURL }}" class="contact-btn">
+                            <i class="fas fa-calendar"></i> Book Appointment
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="sidebar-widget newsletter-widget">
+                    <h3>Stay Updated</h3>
+                    <p>Get the latest health tips delivered to your inbox.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Comments Section (Optional) -->
+        {{ if .Site.Params.comments.enabled }}
+        <section class="comments-section">
+            <div class="comments-header">
+                <h2>Comments</h2>
+                <p>Share your thoughts and experiences below.</p>
+            </div>
+            <!-- Add your preferred comments system here (Disqus, etc.) -->
+            <div id="disqus_thread"></div>
+        </section>
+        {{ end }}
+    </div>
+</div>
+{{ end }}

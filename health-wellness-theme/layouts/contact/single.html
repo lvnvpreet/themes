@@ -1,0 +1,224 @@
+{{ define "main" }}
+<div class="page-header contact-header">
+    <div class="container">
+        <h1>{{ .Title }}</h1>
+        {{ if .Params.description }}
+        <p class="page-description">{{ .Params.description }}</p>
+        {{ end }}
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="container">
+        <!-- Contact Overview -->
+        <section class="contact-overview">
+            {{ .Content }}
+        </section>
+
+        <!-- Main Contact Section -->
+        <section class="contact-main">
+            <div class="contact-grid">
+                <!-- Contact Form -->
+                <div class="contact-form-section">
+                    <h2>Send Us a Message</h2>
+                    <form class="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Full Name *</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone">
+                            </div>
+                            <div class="form-group">
+                                <label for="service">Service Interest</label>
+                                <select id="service" name="service">
+                                    <option value="">Select a service</option>
+                                    {{ range .Site.Params.services }}
+                                    <option value="{{ .name }}">{{ .name }}</option>
+                                    {{ end }}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject *</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" rows="6" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" required>
+                                <span class="checkmark"></span>
+                                I agree to the <a href="{{ "privacy" | relURL }}">Privacy Policy</a> and consent to being contacted.
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+                    </form>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="contact-info-section">
+                    <div class="contact-card">
+                        <h2>Get In Touch</h2>
+                        <p>We're here to answer your questions and help you schedule an appointment.</p>
+                        
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <h3>Address</h3>
+                                    <p>{{ .Site.Params.address }}</p>
+                                </div>
+                            </div>
+
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <h3>Phone</h3>
+                                    <p><a href="tel:{{ .Site.Params.phone }}">{{ .Site.Params.phone }}</a></p>
+                                    {{ if .Site.Params.emergency_phone }}
+                                    <p class="emergency">Emergency: <a href="tel:{{ .Site.Params.emergency_phone }}">{{ .Site.Params.emergency_phone }}</a></p>
+                                    {{ end }}
+                                </div>
+                            </div>
+
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <h3>Email</h3>
+                                    <p><a href="mailto:{{ .Site.Params.email }}">{{ .Site.Params.email }}</a></p>
+                                </div>
+                            </div>
+
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <h3>Office Hours</h3>
+                                    <p>{{ .Site.Params.hours }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Social Media -->
+                        <div class="contact-social">
+                            <h3>Follow Us</h3>
+                            <div class="social-links">
+                                {{ with .Site.Params.social.facebook }}<a href="{{ . }}" target="_blank"><i class="fab fa-facebook"></i></a>{{ end }}
+                                {{ with .Site.Params.social.twitter }}<a href="{{ . }}" target="_blank"><i class="fab fa-twitter"></i></a>{{ end }}
+                                {{ with .Site.Params.social.instagram }}<a href="{{ . }}" target="_blank"><i class="fab fa-instagram"></i></a>{{ end }}
+                                {{ with .Site.Params.social.linkedin }}<a href="{{ . }}" target="_blank"><i class="fab fa-linkedin"></i></a>{{ end }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="quick-actions">
+                        <h3>Quick Actions</h3>
+                        <div class="action-buttons">
+                            <a href="tel:{{ .Site.Params.phone }}" class="action-btn">
+                                <i class="fas fa-phone"></i>
+                                <span>Call Now</span>
+                            </a>
+                            <a href="mailto:{{ .Site.Params.email }}" class="action-btn">
+                                <i class="fas fa-envelope"></i>
+                                <span>Email Us</span>
+                            </a>
+                            <a href="{{ "services" | relURL }}" class="action-btn">
+                                <i class="fas fa-calendar"></i>
+                                <span>Book Service</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Google Maps -->
+        <section class="maps-section">
+            <div class="section-header">
+                <h2>Find Us</h2>
+                <p>Visit our conveniently located office</p>
+            </div>
+            <div class="maps-container">
+                <!-- Replace with your actual Google Maps embed code -->
+                <div class="map-placeholder">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.2176129253434!2d-73.98823492459754!3d40.75804097138558!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square%2C%20New%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2s!4v1699564800000!5m2!1sen!2s" 
+                        width="100%" 
+                        height="400" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+                <div class="map-info">
+                    <h3>Directions</h3>
+                    <ul class="directions-list">
+                        <li><i class="fas fa-car"></i> Free parking available</li>
+                        <li><i class="fas fa-subway"></i> Near public transportation</li>
+                        <li><i class="fas fa-wheelchair"></i> Wheelchair accessible</li>
+                        <li><i class="fas fa-elevator"></i> Elevator access available</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Emergency Contact -->
+        <section class="emergency-section">
+            <div class="emergency-card">
+                <div class="emergency-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="emergency-content">
+                    <h2>Medical Emergency?</h2>
+                    <p>If you are experiencing a medical emergency, please call 911 immediately or visit your nearest emergency room.</p>
+                    <p>For urgent non-emergency medical concerns outside office hours, call our emergency line:</p>
+                    <a href="tel:{{ .Site.Params.emergency_phone }}" class="btn btn-danger">{{ .Site.Params.emergency_phone }}</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        {{ if .Site.Params.contact_faq }}
+        <section class="contact-faq">
+            <div class="section-header">
+                <h2>Contact FAQ</h2>
+                <p>Common questions about contacting us</p>
+            </div>
+            <div class="faq-container">
+                {{ range .Site.Params.contact_faq }}
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>{{ .question }}</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>{{ .answer }}</p>
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </section>
+        {{ end }}
+    </div>
+</div>
+{{ end }}

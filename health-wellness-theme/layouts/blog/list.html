@@ -1,0 +1,223 @@
+{{ define "main" }}
+<!-- Include blog-specific CSS -->
+<link rel="stylesheet" href="{{ "css/blog-theme.css" | relURL }}">
+
+<div class="page-header blog-header">
+    <div class="container">
+        <h1>{{ .Title }}</h1>
+        {{ if .Params.description }}
+        <p class="page-description">{{ .Params.description }}</p>
+        {{ else }}
+        <p class="page-description">Stay up-to-date with the latest health information, oral hygiene tips, and dental insights from our team of dental professionals. Our blog covers a wide range of topics to help you make informed decisions about your oral health.</p>
+        {{ end }}
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="container">
+        <div class="blog-layout">
+            <!-- Main Content -->
+            <div class="blog-main">
+                <!-- Blog Overview -->
+                <section class="blog-overview">
+                    {{ .Content }}
+                </section>
+
+                <!-- Featured Post -->
+                {{ if .Site.Params.featured_post }}
+                <section class="featured-post">
+                    {{ with (index (where .Site.RegularPages "Params.featured" true) 0) }}
+                    <article class="featured-article">
+                        <div class="featured-image">
+                            {{ if .Params.featured_image }}
+                            <img src="{{ .Params.featured_image }}" alt="{{ .Title }}">
+                            {{ end }}
+                            <div class="featured-badge">Featured</div>
+                        </div>
+                        <div class="featured-content">
+                            <div class="post-meta">
+                                <span class="post-date">{{ .Date.Format "January 2, 2006" }}</span>
+                                {{ if .Params.category }}
+                                <span class="post-category">{{ .Params.category }}</span>
+                                {{ end }}
+                                {{ if .Params.author }}
+                                <span class="post-author">By {{ .Params.author }}</span>
+                                {{ end }}
+                            </div>
+                            <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+                            <p>{{ .Summary }}</p>
+                            <a href="{{ .Permalink }}" class="btn btn-primary">Read Full Article</a>
+                        </div>
+                    </article>
+                    {{ end }}
+                </section>
+                {{ end }}                <!-- Blog Posts Grid -->
+                <section class="blog-posts">
+                    <div class="posts-grid">
+                        {{ $paginator := .Paginate .Pages 9 }}
+                        {{ range $paginator.Pages }}
+                        <article class="post-card">
+                            <div class="post-image">
+                                {{ if .Params.featured_image }}
+                                <img src="{{ .Params.featured_image }}" alt="{{ .Title }}" loading="lazy">
+                                {{ else }}
+                                <img src="/images/default-blog.jpg" alt="{{ .Title }}" loading="lazy">
+                                {{ end }}
+                                {{ if .Params.category }}
+                                <span class="post-category-badge">{{ .Params.category }}</span>
+                                {{ end }}
+                            </div>
+                            <div class="post-content">
+                                <div class="post-meta">
+                                    <span class="post-date">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        {{ .Date.Format "Jan 2, 2006" }}
+                                    </span>
+                                    {{ if .Params.author }}
+                                    <span class="post-author">
+                                        <i class="fas fa-user"></i>
+                                        {{ .Params.author }}
+                                    </span>
+                                    {{ end }}
+                                    {{ if .Params.read_time }}
+                                    <span class="read-time">
+                                        <i class="fas fa-clock"></i>
+                                        {{ .Params.read_time }} min read
+                                    </span>
+                                    {{ end }}
+                                </div>
+                                <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+                                <p>{{ .Summary }}</p>
+                                <div class="post-footer">
+                                    <a href="{{ .Permalink }}" class="read-more">
+                                        Read More <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                    {{ if .Params.tags }}
+                                    <div class="post-tags">
+                                        {{ range first 3 .Params.tags }}
+                                        <span class="tag">#{{ . }}</span>
+                                        {{ end }}
+                                    </div>
+                                    {{ end }}
+                                </div>
+                            </div>
+                        </article>
+                        {{ end }}
+                    </div>
+
+                    <!-- Pagination -->
+                    {{ if gt $paginator.TotalPages 1 }}
+                    <nav class="pagination">
+                        <div class="pagination-info">
+                            <p>Showing {{ $paginator.PageSize }} of {{ len .Site.RegularPages }} posts</p>
+                        </div>
+                        <div class="pagination-links">
+                            {{ if $paginator.HasPrev }}
+                            <a href="{{ $paginator.Prev.URL }}" class="pagination-link prev">
+                                <i class="fas fa-chevron-left"></i> Previous
+                            </a>
+                            {{ end }}
+                            
+                            {{ range $paginator.Pagers }}
+                            {{ if eq . $paginator }}
+                            <span class="pagination-link current">{{ .PageNumber }}</span>
+                            {{ else }}
+                            <a href="{{ .URL }}" class="pagination-link">{{ .PageNumber }}</a>
+                            {{ end }}
+                            {{ end }}
+                            
+                            {{ if $paginator.HasNext }}
+                            <a href="{{ $paginator.Next.URL }}" class="pagination-link next">
+                                Next <i class="fas fa-chevron-right"></i>
+                            </a>
+                            {{ end }}
+                        </div>
+                    </nav>
+                    {{ end }}
+                </section>
+            </div>            <!-- Sidebar -->
+            <aside class="blog-sidebar">
+                <!-- Search Widget -->
+                <div class="sidebar-widget search-widget">
+                    <h3><i class="fas fa-search"></i> Search Articles</h3>
+                    <form class="search-form">
+                        <input type="search" placeholder="Search health topics..." name="q">
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+
+                <!-- Categories Widget -->
+                <div class="sidebar-widget categories-widget">
+                    <h3><i class="fas fa-folder"></i> Categories</h3>
+                    <ul class="categories-list">
+                        {{ range .Site.Taxonomies.categories }}
+                        <li>
+                            <a href="{{ .Page.Permalink }}">
+                                <span>{{ .Page.Title }}</span>
+                                <span class="count">({{ .Count }})</span>
+                            </a>
+                        </li>
+                        {{ end }}
+                    </ul>
+                </div>
+
+                <!-- Recent Posts Widget -->
+                <div class="sidebar-widget recent-posts-widget">
+                    <h3><i class="fas fa-clock"></i> Recent Posts</h3>
+                    <div class="recent-posts">
+                        {{ range first 5 (where .Site.RegularPages "Section" "blog") }}
+                        <article class="recent-post">
+                            {{ if .Params.featured_image }}
+                            <div class="recent-post-image">
+                                <img src="{{ .Params.featured_image }}" alt="{{ .Title }}" loading="lazy">
+                            </div>
+                            {{ end }}
+                            <div class="recent-post-content">
+                                <h4><a href="{{ .Permalink }}">{{ .Title }}</a></h4>
+                                <span class="recent-post-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    {{ .Date.Format "Jan 2, 2006" }}
+                                </span>
+                            </div>
+                        </article>
+                        {{ end }}
+                    </div>
+                </div>
+
+                <!-- Popular Tags Widget -->
+                {{ if .Site.Taxonomies.tags }}
+                <div class="sidebar-widget tags-widget">
+                    <h3><i class="fas fa-tags"></i> Popular Tags</h3>
+                    <div class="tags-cloud">
+                        {{ range first 15 .Site.Taxonomies.tags.ByCount }}
+                        <a href="{{ .Page.Permalink }}" class="tag-link">{{ .Page.Title }}</a>
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+
+                <!-- Newsletter Widget -->
+                <div class="sidebar-widget newsletter-widget">
+                    <h3><i class="fas fa-envelope"></i> Health Tips Newsletter</h3>
+                    <p>Get weekly health tips and updates delivered to your inbox.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+
+                <!-- Social Media Widget -->
+                <div class="sidebar-widget social-widget">
+                    <h3><i class="fas fa-share-alt"></i> Follow Us</h3>
+                    <div class="social-links">
+                        {{ with .Site.Params.social.facebook }}<a href="{{ . }}" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>{{ end }}
+                        {{ with .Site.Params.social.twitter }}<a href="{{ . }}" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>{{ end }}
+                        {{ with .Site.Params.social.instagram }}<a href="{{ . }}" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>{{ end }}
+                        {{ with .Site.Params.social.linkedin }}<a href="{{ . }}" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>{{ end }}
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</div>
+{{ end }}

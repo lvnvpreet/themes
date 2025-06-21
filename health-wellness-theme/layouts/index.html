@@ -1,0 +1,311 @@
+{{ define "main" }}
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-background">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">{{ .Site.Params.hero.title | default "Your Health is Our Priority" }}</h1>
+                <p class="hero-description">{{ .Site.Params.hero.description | default "Professional healthcare services with compassionate care and cutting-edge technology." }}</p>
+                <div class="hero-buttons">
+                    <a href="{{ "contact" | relURL }}" class="btn btn-primary">{{ .Site.Params.hero.cta | default "Book Appointment" }}</a>
+                    <a href="{{ "services" | relURL }}" class="btn btn-outline">Our Services</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Services Section -->
+<section class="services-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Our Services</h2>
+            <p>Comprehensive healthcare solutions tailored to your needs</p>
+        </div>
+        <div class="services-grid">
+            {{ range .Site.Params.home_services }}
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="{{ .icon }}"></i>
+                </div>
+                <h3>{{ .title }}</h3>
+                <p>{{ .description }}</p>
+                <a href="{{ .url }}" class="btn btn-outline">Learn More</a>
+            </div>
+            {{ end }}
+        </div>
+        <div class="section-footer">
+            <a href="{{ "services" | relURL }}" class="btn btn-primary">View All Services</a>
+        </div>
+    </div>
+</section>
+
+<!-- About Us Section -->
+<section class="about-section">
+    <div class="container">
+        <div class="about-content">
+            <div class="about-image">
+                <img src="{{ .Site.Params.about_image | default "/images/about-us.jpg" }}" alt="About Us">
+            </div>
+            <div class="about-text">
+                <h2>{{ .Site.Params.about.title | default "About Our Practice" }}</h2>
+                <p>{{ .Site.Params.about.description | default "With over 15 years of experience, we provide exceptional healthcare services with a personal touch. Our team of qualified professionals is dedicated to your wellbeing." }}</p>
+                <ul class="about-features">
+                    {{ range .Site.Params.about.features }}
+                    <li><i class="fas fa-check"></i> {{ . }}</li>
+                    {{ end }}
+                </ul>
+                <a href="{{ "about" | relURL }}" class="btn btn-primary">Learn More About Us</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>What Our Patients Say</h2>
+            <p>Real experiences from real people</p>
+        </div>
+        <div class="testimonials-slider">
+            {{ range .Site.Params.testimonials }}
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <div class="stars">
+                        {{ range seq .rating }}
+                        <i class="fas fa-star"></i>
+                        {{ end }}
+                    </div>
+                    <p>"{{ .content }}"</p>
+                </div>
+                <div class="testimonial-author">
+                    <img src="{{ .image }}" alt="{{ .name }}">
+                    <div class="author-info">
+                        <h4>{{ .name }}</h4>
+                        <span>{{ .title }}</span>
+                    </div>
+                </div>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Frequently Asked Questions</h2>
+            <p>Find answers to common questions</p>
+        </div>
+        <div class="faq-container">
+            {{ range .Site.Params.faqs }}
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>{{ .question }}</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>{{ .answer }}</p>
+                </div>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</section>
+
+<!-- Expert Team Section -->
+<section class="team-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Meet Our Expert Team</h2>
+            <p>Experienced professionals dedicated to your health</p>
+        </div>
+        <div class="team-grid">
+            {{ range .Site.Params.team }}
+            <div class="team-card">
+                <div class="team-image">
+                    <img src="{{ .image }}" alt="{{ .name }}">
+                    <div class="team-overlay">
+                        <div class="team-social">
+                            {{ with .social.linkedin }}<a href="{{ . }}" target="_blank"><i class="fab fa-linkedin"></i></a>{{ end }}
+                            {{ with .social.twitter }}<a href="{{ . }}" target="_blank"><i class="fab fa-twitter"></i></a>{{ end }}
+                        </div>
+                    </div>
+                </div>
+                <div class="team-info">
+                    <h3>{{ .name }}</h3>
+                    <p class="team-designation">{{ .designation }}</p>
+                    <p class="team-bio">{{ .bio }}</p>
+                </div>
+            </div>
+            {{ end }}
+        </div>
+        <div class="section-footer">
+            <a href="{{ "about" | relURL }}#team" class="btn btn-outline">Meet Full Team</a>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us Section -->
+<section class="why-choose-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Why Choose Us</h2>
+            <p>What makes us different from others</p>
+        </div>
+        <div class="features-grid">
+            {{ range .Site.Params.why_choose }}
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="{{ .icon }}"></i>
+                </div>
+                <h3>{{ .title }}</h3>
+                <p>{{ .description }}</p>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</section>
+
+<!-- Special Offers Section -->
+<section class="offers-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Special Offers</h2>
+            <p>Take advantage of our current promotions</p>
+        </div>
+        <div class="offers-grid">
+            {{ range .Site.Params.offers }}
+            <div class="offer-card">
+                <div class="offer-header">
+                    <h3>{{ .title }}</h3>
+                    <span class="offer-price">{{ .price }}</span>
+                </div>
+                <div class="offer-content">
+                    <p>{{ .description }}</p>
+                    <ul class="offer-features">
+                        {{ range .features }}
+                        <li><i class="fas fa-check"></i> {{ . }}</li>
+                        {{ end }}
+                    </ul>
+                </div>
+                <a href="{{ .url }}" class="btn btn-primary">Get Offer</a>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</section>
+
+<!-- Latest News Section -->
+<section class="news-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Latest Health News & Tips</h2>
+            <p>Stay updated with health and wellness insights</p>
+        </div>
+        <div class="news-grid">
+            {{ range first 3 (where .Site.RegularPages "Section" "blog") }}
+            <article class="news-card">
+                <div class="news-image">
+                    {{ if .Params.featured_image }}
+                    <img src="{{ .Params.featured_image }}" alt="{{ .Title }}">
+                    {{ else }}
+                    <img src="/images/default-blog.jpg" alt="{{ .Title }}">
+                    {{ end }}
+                </div>
+                <div class="news-content">
+                    <div class="news-meta">
+                        <span class="news-date">{{ .Date.Format "Jan 2, 2006" }}</span>
+                        {{ if .Params.category }}
+                        <span class="news-category">{{ .Params.category }}</span>
+                        {{ end }}
+                    </div>
+                    <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+                    <p>{{ .Summary }}</p>
+                    <a href="{{ .Permalink }}" class="news-link">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+            {{ end }}
+        </div>
+        <div class="section-footer">
+            <a href="{{ "blog" | relURL }}" class="btn btn-outline">View All Posts</a>
+        </div>
+    </div>
+</section>
+
+<!-- Appointment Scheduling Section -->
+<section class="appointment-section" id="appointment">
+    <div class="container">
+        <div class="appointment-content">
+            <div class="appointment-info">
+                <h2>Schedule Your Appointment</h2>
+                <p>Book your consultation with our expert team. We're here to help you achieve optimal health.</p>
+                <div class="appointment-features">
+                    <div class="feature">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Easy Online Booking</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-clock"></i>
+                        <span>Flexible Scheduling</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-user-md"></i>
+                        <span>Expert Consultation</span>
+                    </div>
+                </div>
+            </div>
+            <div class="appointment-form">
+                <form>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" placeholder="Full Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Email Address" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="tel" placeholder="Phone Number" required>
+                        </div>
+                        <div class="form-group">
+                            <select required>
+                                <option value="">Select Service</option>
+                                {{ range .Site.Params.services }}
+                                <option value="{{ .name }}">{{ .name }}</option>
+                                {{ end }}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="date" required>
+                        </div>
+                        <div class="form-group">
+                            <select required>
+                                <option value="">Preferred Time</option>
+                                <option value="9:00 AM">9:00 AM</option>
+                                <option value="10:00 AM">10:00 AM</option>
+                                <option value="11:00 AM">11:00 AM</option>
+                                <option value="2:00 PM">2:00 PM</option>
+                                <option value="3:00 PM">3:00 PM</option>
+                                <option value="4:00 PM">4:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Additional Notes" rows="4"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Book Appointment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{ end }}
