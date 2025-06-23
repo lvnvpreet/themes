@@ -142,51 +142,51 @@
 {
   "@context": "https://schema.org",
   "@type": "DentalClinic",
-  "name": "{{ .Site.Title }}",
-  "description": "{{ .Site.Params.description }}",
-  "url": "{{ .Site.BaseURL }}",
-  {{ with .Site.Params.phone }}
+  "name": "{{ $.Site.Title }}",
+  "description": "{{ $.Site.Params.description }}",
+  "url": "{{ $.Site.BaseURL }}",
+  {{ with $.Site.Params.phone }}
   "telephone": "{{ . }}",
   {{ end }}
-  {{ with .Site.Params.address }}
+  {{ with $.Site.Params.address }}
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "{{ . }}"
   },
   {{ end }}
-  {{ with .Site.Params.hours }}
+  {{ with $.Site.Params.hours }}
   "openingHours": [
     "Mo-Fr 08:00-18:00",
     "Sa 09:00-14:00"
   ],
   {{ end }}
-  {{ with .Site.Params.email }}
+  {{ with $.Site.Params.email }}
   "email": "{{ . }}",
   {{ end }}
-  "priceRange": "$$",
-  {{ if .Site.Params.social }}
+  "priceRange": "$$",{{ if $.Site.Params.social }}
   "sameAs": [
-    {{ with .Site.Params.social.facebook }}"{{ . }}"{{ end }}
-    {{ with .Site.Params.social.twitter }},{{ if .Site.Params.social.facebook }} {{ end }}"{{ . }}"{{ end }}
-    {{ with .Site.Params.social.instagram }},{{ if or .Site.Params.social.facebook .Site.Params.social.twitter }} {{ end }}"{{ . }}"{{ end }}
-    {{ with .Site.Params.social.linkedin }},{{ if or .Site.Params.social.facebook .Site.Params.social.twitter .Site.Params.social.instagram }} {{ end }}"{{ . }}"{{ end }}
+    {{ with $.Site.Params.social.facebook }}"{{ . }}"{{ end }}
+    {{ with $.Site.Params.social.twitter }}{{ if $.Site.Params.social.facebook }},{{ end }}"{{ . }}"{{ end }}
+    {{ with $.Site.Params.social.instagram }}{{ if or $.Site.Params.social.facebook $.Site.Params.social.twitter }},{{ end }}"{{ . }}"{{ end }}
+    {{ with $.Site.Params.social.linkedin }}{{ if or $.Site.Params.social.facebook $.Site.Params.social.twitter $.Site.Params.social.instagram }},{{ end }}"{{ . }}"{{ end }}
   ],
-  {{ end }}
+  {{ end }}  {{ if $.Site.Data.homepage.home_services }}
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
     "name": "Dental Services",
     "itemListElement": [
-      {{ range $index, $service := .Site.Data.homepage.home_services }}
+      {{ range $index, $service := $.Site.Data.homepage.home_services }}
       {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "{{ .title }}",
-          "description": "{{ .description }}"
+          "name": "{{ $service.title }}",
+          "description": "{{ $service.description }}"
         }
       }{{ if ne $index (sub (len $.Site.Data.homepage.home_services) 1) }},{{ end }}
       {{ end }}
     ]
   }
+  {{ end }}
 }
 </script>
