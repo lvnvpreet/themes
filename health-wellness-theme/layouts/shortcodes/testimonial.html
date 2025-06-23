@@ -1,0 +1,23 @@
+{{ $name := .Get "name" | default "Patient Name" }}
+{{ $title := .Get "title" | default "Patient" }}
+{{ $content := .Get "content" | default "Great service and professional care." }}
+{{ $rating := .Get "rating" | default 5 }}
+{{ $image := .Get "image" | default "/images/testimonials/default.jpg" }}
+
+<div class="testimonial-card">
+    <div class="testimonial-content">
+        <div class="stars">
+            {{ range seq (int $rating) }}
+            <i class="fas fa-star"></i>
+            {{ end }}
+        </div>
+        <p>"{{ $content }}"</p>
+    </div>
+    <div class="testimonial-author">
+        <img src="{{ $image }}" alt="{{ $name }}" loading="lazy">
+        <div class="author-info">
+            <h4>{{ $name }}</h4>
+            <span>{{ $title }}</span>
+        </div>
+    </div>
+</div>

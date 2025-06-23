@@ -1,0 +1,23 @@
+{{ $title := .Get "title" | default .Page.Site.Data.homepage.hero.title | default "Your Health is Our Priority" }}
+{{ $description := .Get "description" | default .Page.Site.Data.homepage.hero.description | default "Professional healthcare services with compassionate care and cutting-edge technology." }}
+{{ $background := .Get "background" | default "/images/hero-bg.jpg" }}
+{{ $cta_primary := .Get "cta_primary" | default "Book Appointment" }}
+{{ $cta_secondary := .Get "cta_secondary" | default "Our Services" }}
+{{ $cta_primary_link := .Get "cta_primary_link" | default "/contact" }}
+{{ $cta_secondary_link := .Get "cta_secondary_link" | default "/services" }}
+
+<section class="hero-section">
+    <div class="hero-background" style="background-image: url('{{ $background }}');">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">{{ $title }}</h1>
+                <p class="hero-description">{{ $description }}</p>
+                <div class="hero-buttons">
+                    <a href="{{ $cta_primary_link | relURL }}" class="btn btn-primary">{{ $cta_primary }}</a>
+                    <a href="{{ $cta_secondary_link | relURL }}" class="btn btn-outline">{{ $cta_secondary }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

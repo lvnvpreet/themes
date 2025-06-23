@@ -1,0 +1,73 @@
+- name: "Dr. Sarah Johnson"
+  designation: "Lead Dentist & Practice Owner"
+  image: "/images/team/dr-sarah-johnson.jpg"
+  bio: "Dr. Johnson has over 15 years of experience in comprehensive dental care with a focus on cosmetic and restorative dentistry."
+  featured: true
+  qualifications:
+    - "DDS from Harvard School of Dental Medicine"
+    - "Board Certified in General Dentistry"
+    - "Member of American Dental Association"
+    - "Continuing Education in Cosmetic Dentistry"
+  social:
+    linkedin: "https://linkedin.com/in/dr-sarah-johnson"
+    email: "sarah@stardentic.com"
+  phone: "+1-234-567-8901"
+  
+- name: "Dr. Michael Chen"
+  designation: "Oral Surgeon"
+  image: "/images/team/dr-michael-chen.jpg"
+  bio: "Specializing in oral and maxillofacial surgery with expertise in dental implants and complex extractions."
+  featured: true
+  qualifications:
+    - "DDS from UCLA School of Dentistry"
+    - "Residency in Oral & Maxillofacial Surgery"
+    - "Board Certified Oral Surgeon"
+    - "Fellow of American Association of Oral Surgeons"
+  social:
+    linkedin: "https://linkedin.com/in/dr-michael-chen"
+    email: "michael@stardentic.com"
+  phone: "+1-234-567-8902"
+  
+- name: "Dr. Emily Rodriguez"
+  designation: "Pediatric Dentist"
+  image: "/images/team/dr-emily-rodriguez.jpg"
+  bio: "Dedicated to providing gentle, comprehensive dental care for children in a fun and comfortable environment."
+  featured: true
+  qualifications:
+    - "DDS from University of Pennsylvania"
+    - "Pediatric Dentistry Residency"
+    - "Board Certified Pediatric Dentist"
+    - "Member of American Academy of Pediatric Dentistry"
+  social:
+    linkedin: "https://linkedin.com/in/dr-emily-rodriguez"
+    email: "emily@stardentic.com"
+  phone: "+1-234-567-8903"
+  
+- name: "Lisa Thompson"
+  designation: "Dental Hygienist"
+  image: "/images/team/lisa-thompson.jpg"
+  bio: "Licensed dental hygienist with 10 years of experience in preventive care and patient education."
+  featured: false
+  qualifications:
+    - "Associate Degree in Dental Hygiene"
+    - "Licensed Dental Hygienist"
+    - "Certified in Local Anesthesia Administration"
+    - "CPR and First Aid Certified"
+  social:
+    email: "lisa@stardentic.com"
+  phone: "+1-234-567-8904"
+  
+- name: "Jennifer Walsh"
+  designation: "Practice Manager"
+  image: "/images/team/jennifer-walsh.jpg"
+  bio: "Experienced practice manager ensuring smooth operations and exceptional patient experience."
+  featured: false
+  qualifications:
+    - "Bachelor's in Healthcare Administration"
+    - "Certified Practice Manager"
+    - "15 years healthcare management experience"
+    - "Insurance and billing specialist"
+  social:
+    linkedin: "https://linkedin.com/in/jennifer-walsh"
+    email: "jennifer@stardentic.com"
+  phone: "+1-234-567-8905"

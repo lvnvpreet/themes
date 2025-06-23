@@ -1,0 +1,24 @@
+general:
+  - question: "What should I expect during my first visit?"
+    answer: "Your first visit includes a comprehensive oral examination, digital X-rays if needed, professional cleaning, and a discussion of your oral health goals. We'll create a personalized treatment plan and answer all your questions."
+    
+  - question: "Do you accept insurance?"
+    answer: "Yes, we accept most major insurance plans including Delta Dental, MetLife, Cigna, Aetna, and Blue Cross Blue Shield. Our staff will help verify your benefits and maximize your insurance coverage."
+    
+  - question: "What payment options do you offer?"
+    answer: "We accept cash, credit cards, CareCredit financing, and offer flexible payment plans. We also accept HSA/FSA payments for qualified treatments."
+    
+  - question: "How often should I visit the dentist?"
+    answer: "We recommend regular checkups and cleanings every six months for most patients. However, some patients may need more frequent visits based on their oral health needs."
+    
+  - question: "Do you offer emergency dental services?"
+    answer: "Yes, we provide emergency dental care 24/7. Call our emergency line at +1-234-567-8911 for urgent dental problems, severe pain, or dental trauma."
+    
+  - question: "What makes your practice different?"
+    answer: "We combine advanced dental technology with personalized, compassionate care. Our experienced team focuses on patient comfort, comprehensive treatment planning, and long-term oral health."
+    
+  - question: "How do I schedule an appointment?"
+    answer: "You can schedule an appointment by calling our office, using our online booking system, or visiting our office. We offer flexible scheduling including evening and weekend appointments."
+    
+  - question: "What should I do for a dental emergency?"
+    answer: "For severe pain, trauma, or life-threatening situations, call 911 or visit the emergency room. For urgent dental issues, call our emergency line immediately for guidance and treatment."

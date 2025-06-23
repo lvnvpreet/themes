@@ -1,0 +1,23 @@
+{{ $title := .Get "title" | default "Service Title" }}
+{{ $description := .Get "description" | default "Service description goes here." }}
+{{ $icon := .Get "icon" | default "fas fa-heart" }}
+{{ $url := .Get "url" | default "#" }}
+{{ $price := .Get "price" }}
+{{ $duration := .Get "duration" }}
+
+<div class="service-card">
+    <div class="service-icon">
+        <i class="{{ $icon }}"></i>
+    </div>
+    <h3>{{ $title }}</h3>
+    <p>{{ $description }}</p>
+    {{ if $duration }}
+    <div class="service-meta">
+        <span><i class="fas fa-clock"></i> {{ $duration }}</span>
+        {{ if $price }}
+        <span class="price">{{ $price }}</span>
+        {{ end }}
+    </div>
+    {{ end }}
+    <a href="{{ $url | relURL }}" class="btn btn-outline">Learn More</a>
+</div>

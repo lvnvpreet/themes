@@ -1,0 +1,47 @@
+- name: "Robert Johnson"
+  title: "Business Owner"
+  content: "The team at StarDentic is absolutely amazing. Dr. Johnson and her staff made me feel comfortable throughout my entire treatment. The results exceeded my expectations!"
+  rating: 5
+  image: "/images/testimonials/robert-johnson.jpg"
+  featured: true
+  service: "Dental Implants"
+  
+- name: "Maria Garcia"
+  title: "Teacher"
+  content: "I was terrified of dental work, but the staff here is so gentle and understanding. They explained everything clearly and made sure I was comfortable at every step."
+  rating: 5
+  image: "/images/testimonials/maria-garcia.jpg"
+  featured: true
+  service: "General Dentistry"
+  
+- name: "David Kim"
+  title: "Software Engineer"
+  content: "Professional, efficient, and caring. The office is modern and clean, and the technology they use is impressive. Highly recommend for anyone looking for quality dental care."
+  rating: 5
+  image: "/images/testimonials/david-kim.jpg"
+  featured: true
+  service: "Cosmetic Dentistry"
+  
+- name: "Sarah Mitchell"
+  title: "Mother of Two"
+  content: "My kids actually look forward to their dental visits here! Dr. Rodriguez is wonderful with children, and the staff makes the experience fun and educational."
+  rating: 5
+  image: "/images/testimonials/sarah-mitchell.jpg"
+  featured: false
+  service: "Pediatric Dentistry"
+  
+- name: "James Wilson"
+  title: "Retired"
+  content: "After years of dental problems, I finally found a practice that provides comprehensive care. The treatment plan was thorough, and the results have been life-changing."
+  rating: 5
+  image: "/images/testimonials/james-wilson.jpg"
+  featured: false
+  service: "Restorative Dentistry"
+  
+- name: "Amanda Thompson"
+  title: "Marketing Manager"
+  content: "The convenience of online scheduling and the modern facilities make this the best dental practice I've ever been to. Professional service every time."
+  rating: 5
+  image: "/images/testimonials/amanda-thompson.jpg"
+  featured: false
+  service: "General Dentistry"

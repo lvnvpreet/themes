@@ -1,0 +1,117 @@
+hero:
+  title: "Your Health is Our Priority"
+  description: "Professional healthcare services with compassionate care and cutting-edge technology. Experience the difference of personalized dental care in our modern, comfortable facility."
+  cta_primary: "Book Appointment"
+  cta_secondary: "Our Services"
+  background_image: "/images/hero-bg.jpg"
+
+home_services:
+  - title: "General Dentistry"
+    description: "Comprehensive dental care including cleanings, fillings, and preventive treatments for optimal oral health."
+    icon: "fas fa-tooth"
+    url: "/services/general-dentistry"
+    price: "From $150"
+    duration: "60 minutes"
+    
+  - title: "Cosmetic Dentistry"
+    description: "Transform your smile with teeth whitening, veneers, and cosmetic treatments for a confident smile."
+    icon: "fas fa-smile"
+    url: "/services/cosmetic-dentistry"
+    price: "From $300"
+    duration: "90 minutes"
+    
+  - title: "Dental Implants"
+    description: "Permanent tooth replacement solutions with titanium implants for natural-looking, long-lasting results."
+    icon: "fas fa-teeth"
+    url: "/services/dental-implants"
+    price: "From $2,500"
+    duration: "Multiple visits"
+    
+  - title: "Orthodontics"
+    description: "Straighten your teeth with traditional braces or clear aligners for a perfectly aligned smile."
+    icon: "fas fa-teeth-open"
+    url: "/services/orthodontics"
+    price: "From $3,000"
+    duration: "12-24 months"
+    
+  - title: "Emergency Care"
+    description: "24/7 emergency dental services for urgent dental problems, pain relief, and trauma care."
+    icon: "fas fa-ambulance"
+    url: "/services/emergency-care"
+    price: "Varies"
+    duration: "As needed"
+    
+  - title: "Pediatric Dentistry"
+    description: "Specialized dental care for children in a fun, comfortable environment with child-friendly treatments."
+    icon: "fas fa-child"
+    url: "/services/pediatric-dentistry"
+    price: "From $100"
+    duration: "45 minutes"
+
+about:
+  title: "About StarDentic Practice"
+  description: "With over 15 years of experience, we provide exceptional dental care with a personal touch. Our team of qualified professionals is dedicated to your oral health and overall wellbeing."
+  image: "/images/about/dental-office.jpg"
+  features:
+    - "State-of-the-art dental technology"
+    - "Experienced and caring dental professionals"
+    - "Comprehensive treatment planning"
+    - "Comfortable and modern facilities"
+    - "Flexible scheduling and payment options"
+    - "Emergency care available 24/7"
+
+why_choose:
+  - title: "Advanced Technology"
+    description: "Latest dental technology including digital X-rays, 3D imaging, and laser dentistry for precise, comfortable treatment."
+    icon: "fas fa-microscope"
+    
+  - title: "Experienced Team"
+    description: "Board-certified dentists and hygienists with decades of combined experience in comprehensive dental care."
+    icon: "fas fa-user-md"
+    
+  - title: "Comfortable Environment"
+    description: "Modern, relaxing office designed for patient comfort with amenities to make your visit pleasant."
+    icon: "fas fa-couch"
+    
+  - title: "Flexible Scheduling"
+    description: "Convenient appointment times including evenings and weekends to fit your busy lifestyle."
+    icon: "fas fa-calendar-alt"
+
+stats:
+  - number: "15+"
+    label: "Years of Experience"
+    
+  - number: "5,000+"
+    label: "Happy Patients"
+    
+  - number: "50,000+"
+    label: "Successful Treatments"
+    
+  - number: "99%"
+    label: "Patient Satisfaction"
+
+offers:
+  - title: "New Patient Special"
+    description: "Complete dental exam, X-rays, and professional cleaning for new patients."
+    price: "$99"
+    regular_price: "$299"
+    features:
+      - "Comprehensive oral examination"
+      - "Digital X-rays"
+      - "Professional teeth cleaning"
+      - "Personalized treatment plan"
+    valid_until: "December 31, 2024"
+    url: "/contact?offer=new-patient"
+    
+  - title: "Teeth Whitening Package"
+    description: "Professional teeth whitening treatment for a brighter, more confident smile."
+    price: "$199"
+    regular_price: "$399"
+    features:
+      - "In-office whitening treatment"
+      - "Custom whitening trays"
+      - "Take-home whitening gel"
+      - "Follow-up consultation"
+    valid_until: "January 31, 2025"
+    url: "/contact?offer=whitening"
+

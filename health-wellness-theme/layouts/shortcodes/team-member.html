@@ -1,0 +1,25 @@
+{{ $name := .Get "name" | default "Team Member" }}
+{{ $designation := .Get "designation" | default "Professional" }}
+{{ $image := .Get "image" | default "/images/team/default.jpg" }}
+{{ $bio := .Get "bio" | default "Professional healthcare provider." }}
+{{ $linkedin := .Get "linkedin" }}
+{{ $email := .Get "email" }}
+{{ $phone := .Get "phone" }}
+
+<div class="team-card">
+    <div class="team-image">
+        <img src="{{ $image }}" alt="{{ $name }}" loading="lazy">
+        <div class="team-overlay">
+            <div class="team-social">
+                {{ if $linkedin }}<a href="{{ $linkedin }}" target="_blank" aria-label="{{ $name }}'s LinkedIn Profile"><i class="fab fa-linkedin"></i></a>{{ end }}
+                {{ if $email }}<a href="mailto:{{ $email }}" aria-label="Email {{ $name }}"><i class="fas fa-envelope"></i></a>{{ end }}
+                {{ if $phone }}<a href="tel:{{ $phone }}" aria-label="Call {{ $name }}"><i class="fas fa-phone"></i></a>{{ end }}
+            </div>
+        </div>
+    </div>
+    <div class="team-info">
+        <h3>{{ $name }}</h3>
+        <p class="team-designation">{{ $designation }}</p>
+        <p class="team-bio">{{ $bio }}</p>
+    </div>
+</div>
