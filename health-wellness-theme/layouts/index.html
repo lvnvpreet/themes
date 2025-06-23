@@ -6,11 +6,11 @@
         <div class="hero-overlay"></div>
         <div class="container">
             <div class="hero-content">
-                <h1 class="hero-title">{{ .Site.Params.hero.title | default "Your Health is Our Priority" }}</h1>
-                <p class="hero-description">{{ .Site.Params.hero.description | default "Professional healthcare services with compassionate care and cutting-edge technology." }}</p>
+                <h1 class="hero-title">{{ .Site.Data.homepage.hero.title | default "Your Health is Our Priority" }}</h1>
+                <p class="hero-description">{{ .Site.Data.homepage.hero.description | default "Professional healthcare services with compassionate care and cutting-edge technology." }}</p>
                 <div class="hero-buttons">
-                    <a href="{{ "contact" | relURL }}" class="btn btn-primary">{{ .Site.Params.hero.cta | default "Book Appointment" }}</a>
-                    <a href="{{ "services" | relURL }}" class="btn btn-outline">Our Services</a>
+                    <a href="{{ "contact" | relURL }}" class="btn btn-primary">{{ .Site.Data.homepage.hero.cta_primary | default "Book Appointment" }}</a>
+                    <a href="{{ "services" | relURL }}" class="btn btn-outline">{{ .Site.Data.homepage.hero.cta_secondary | default "Our Services" }}</a>
                 </div>
             </div>
         </div>
@@ -25,7 +25,7 @@
             <p>Comprehensive healthcare solutions tailored to your needs</p>
         </div>
         <div class="services-grid">
-            {{ range .Site.Params.home_services }}
+            {{ range .Site.Data.homepage.home_services }}
             <div class="service-card">
                 <div class="service-icon">
                     <i class="{{ .icon }}"></i>
@@ -47,13 +47,13 @@
     <div class="container">
         <div class="about-content">
             <div class="about-image">
-                <img src="{{ .Site.Params.about_image | default "/images/about-us.jpg" }}" alt="About Us">
+                <img src="{{ .Site.Data.homepage.about.image | default "/images/about-us.jpg" }}" alt="About Us">
             </div>
             <div class="about-text">
-                <h2>{{ .Site.Params.about.title | default "About Our Practice" }}</h2>
-                <p>{{ .Site.Params.about.description | default "With over 15 years of experience, we provide exceptional healthcare services with a personal touch. Our team of qualified professionals is dedicated to your wellbeing." }}</p>
+                <h2>{{ .Site.Data.homepage.about.title | default "About Our Practice" }}</h2>
+                <p>{{ .Site.Data.homepage.about.description | default "With over 15 years of experience, we provide exceptional healthcare services with a personal touch. Our team of qualified professionals is dedicated to your wellbeing." }}</p>
                 <ul class="about-features">
-                    {{ range .Site.Params.about.features }}
+                    {{ range .Site.Data.homepage.about.features }}
                     <li><i class="fas fa-check"></i> {{ . }}</li>
                     {{ end }}
                 </ul>
@@ -71,7 +71,7 @@
             <p>Real experiences from real people</p>
         </div>
         <div class="testimonials-slider">
-            {{ range .Site.Params.testimonials }}
+            {{ range where .Site.Data.testimonials "featured" true }}
             <div class="testimonial-card">
                 <div class="testimonial-content">
                     <div class="stars">
@@ -102,7 +102,7 @@
             <p>Find answers to common questions</p>
         </div>
         <div class="faq-container">
-            {{ range .Site.Params.faqs }}
+            {{ range .Site.Data.faq.general }}
             <div class="faq-item">
                 <div class="faq-question">
                     <h3>{{ .question }}</h3>
@@ -125,14 +125,14 @@
             <p>Experienced professionals dedicated to your health</p>
         </div>
         <div class="team-grid">
-            {{ range .Site.Params.team }}
+            {{ range where .Site.Data.team "featured" true }}
             <div class="team-card">
                 <div class="team-image">
                     <img src="{{ .image }}" alt="{{ .name }}">
                     <div class="team-overlay">
                         <div class="team-social">
-                            {{ with .social.linkedin }}<a href="{{ . }}" target="_blank"><i class="fab fa-linkedin"></i></a>{{ end }}
-                            {{ with .social.twitter }}<a href="{{ . }}" target="_blank"><i class="fab fa-twitter"></i></a>{{ end }}
+                            {{ with .social.linkedin }}<a href="{{ . }}" target="_blank" aria-label="LinkedIn Profile"><i class="fab fa-linkedin"></i></a>{{ end }}
+                            {{ with .social.email }}<a href="mailto:{{ . }}" aria-label="Email Contact"><i class="fas fa-envelope"></i></a>{{ end }}
                         </div>
                     </div>
                 </div>
@@ -158,7 +158,7 @@
             <p>What makes us different from others</p>
         </div>
         <div class="features-grid">
-            {{ range .Site.Params.why_choose }}
+            {{ range .Site.Data.homepage.why_choose }}
             <div class="feature-card">
                 <div class="feature-icon">
                     <i class="{{ .icon }}"></i>
@@ -171,6 +171,22 @@
     </div>
 </section>
 
+<!-- Statistics Section -->
+{{ if .Site.Data.homepage.stats }}
+<section class="stats-section">
+    <div class="container">
+        <div class="stats-grid">
+            {{ range .Site.Data.homepage.stats }}
+            <div class="stat-card">
+                <div class="stat-number">{{ .number }}</div>
+                <div class="stat-label">{{ .label }}</div>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</section>
+{{ end }}
+
 <!-- Special Offers Section -->
 <section class="offers-section">
     <div class="container">
@@ -179,11 +195,16 @@
             <p>Take advantage of our current promotions</p>
         </div>
         <div class="offers-grid">
-            {{ range .Site.Params.offers }}
+            {{ range .Site.Data.homepage.offers }}
             <div class="offer-card">
                 <div class="offer-header">
                     <h3>{{ .title }}</h3>
-                    <span class="offer-price">{{ .price }}</span>
+                    <div class="offer-pricing">
+                        <span class="offer-price">{{ .price }}</span>
+                        {{ if .regular_price }}
+                        <span class="regular-price">{{ .regular_price }}</span>
+                        {{ end }}
+                    </div>
                 </div>
                 <div class="offer-content">
                     <p>{{ .description }}</p>
@@ -192,6 +213,11 @@
                         <li><i class="fas fa-check"></i> {{ . }}</li>
                         {{ end }}
                     </ul>
+                    {{ if .valid_until }}
+                    <div class="offer-validity">
+                        <small>Valid until {{ .valid_until }}</small>
+                    </div>
+                    {{ end }}
                 </div>
                 <a href="{{ .url }}" class="btn btn-primary">Get Offer</a>
             </div>
@@ -212,9 +238,9 @@
             <article class="news-card">
                 <div class="news-image">
                     {{ if .Params.featured_image }}
-                    <img src="{{ .Params.featured_image }}" alt="{{ .Title }}">
+                    <img src="{{ .Params.featured_image }}" alt="{{ .Title }}" loading="lazy">
                     {{ else }}
-                    <img src="/images/default-blog.jpg" alt="{{ .Title }}">
+                    <img src="/images/default-blog.jpg" alt="{{ .Title }}" loading="lazy">
                     {{ end }}
                 </div>
                 <div class="news-content">
@@ -260,34 +286,40 @@
                 </div>
             </div>
             <div class="appointment-form">
-                <form>
+                <form class="appointment-form">
                     <div class="form-row">
                         <div class="form-group">
-                            <input type="text" placeholder="Full Name" required>
+                            <label for="appointment-name">Full Name *</label>
+                            <input type="text" id="appointment-name" name="name" placeholder="Your Name" required>
                         </div>
                         <div class="form-group">
-                            <input type="email" placeholder="Email Address" required>
+                            <label for="appointment-email">Email Address *</label>
+                            <input type="email" id="appointment-email" name="email" placeholder="Email Address" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <input type="tel" placeholder="Phone Number" required>
+                            <label for="appointment-phone">Phone Number *</label>
+                            <input type="tel" id="appointment-phone" name="phone" placeholder="Phone Number" required>
                         </div>
                         <div class="form-group">
-                            <select required>
+                            <label for="appointment-service">Select Service</label>
+                            <select id="appointment-service" name="service" required>
                                 <option value="">Select Service</option>
-                                {{ range .Site.Params.services }}
-                                <option value="{{ .name }}">{{ .name }}</option>
+                                {{ range .Site.Data.homepage.home_services }}
+                                <option value="{{ .title }}">{{ .title }}</option>
                                 {{ end }}
                             </select>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <input type="date" required>
+                            <label for="appointment-date">Preferred Date *</label>
+                            <input type="date" id="appointment-date" name="date" required>
                         </div>
                         <div class="form-group">
-                            <select required>
+                            <label for="appointment-time">Preferred Time</label>
+                            <select id="appointment-time" name="time" required>
                                 <option value="">Preferred Time</option>
                                 <option value="9:00 AM">9:00 AM</option>
                                 <option value="10:00 AM">10:00 AM</option>
@@ -299,7 +331,8 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <textarea placeholder="Additional Notes" rows="4"></textarea>
+                        <label for="appointment-notes">Additional Notes</label>
+                        <textarea id="appointment-notes" name="notes" placeholder="Additional Notes" rows="4"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary btn-full">Book Appointment</button>
                 </form>

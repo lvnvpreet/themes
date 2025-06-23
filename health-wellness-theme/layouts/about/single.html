@@ -18,7 +18,7 @@
                 </div>
                 {{ if .Params.featured_image }}
                 <div class="about-image">
-                    <img src="{{ .Params.featured_image }}" alt="{{ .Title }}">
+                    <img src="{{ .Params.featured_image }}" alt="{{ .Title }}" loading="lazy">
                 </div>
                 {{ end }}
             </div>
@@ -27,6 +27,10 @@
         <!-- Mission, Vision, Values -->
         {{ if .Params.mission_vision }}
         <section class="mission-vision">
+            <div class="section-header">
+                <h2>Our Mission, Vision & Values</h2>
+                <p>The principles that guide our practice</p>
+            </div>
             <div class="mvv-grid">
                 {{ if .Params.mission_vision.mission }}
                 <div class="mvv-card">
@@ -65,7 +69,7 @@
         </section>
         {{ end }}
 
-        <!-- Team Section -->
+        <!-- Team Section (using data file) -->
         {{ if .Params.show_team }}
         <section class="team-section" id="team">
             <div class="section-header">
@@ -73,15 +77,14 @@
                 <p>Experienced professionals dedicated to your health</p>
             </div>
             <div class="team-grid">
-                {{ range .Site.Params.team }}
+                {{ range .Site.Data.team }}
                 <div class="team-card">
                     <div class="team-image">
-                        <img src="{{ .image }}" alt="{{ .name }}">
+                        <img src="{{ .image }}" alt="{{ .name }}" loading="lazy">
                         <div class="team-overlay">
                             <div class="team-social">
-                                {{ with .social.linkedin }}<a href="{{ . }}" target="_blank"><i class="fab fa-linkedin"></i></a>{{ end }}
-                                {{ with .social.twitter }}<a href="{{ . }}" target="_blank"><i class="fab fa-twitter"></i></a>{{ end }}
-                                {{ with .social.email }}<a href="mailto:{{ . }}"><i class="fas fa-envelope"></i></a>{{ end }}
+                                {{ with .social.linkedin }}<a href="{{ . }}" target="_blank" aria-label="{{ $.name }}'s LinkedIn Profile"><i class="fab fa-linkedin"></i></a>{{ end }}
+                                {{ with .social.email }}<a href="mailto:{{ . }}" aria-label="Email {{ $.name }}"><i class="fas fa-envelope"></i></a>{{ end }}
                             </div>
                         </div>
                     </div>
@@ -97,6 +100,13 @@
                                 <li>{{ . }}</li>
                                 {{ end }}
                             </ul>
+                        </div>
+                        {{ end }}
+                        {{ if .phone }}
+                        <div class="team-contact">
+                            <a href="tel:{{ .phone }}" class="contact-link">
+                                <i class="fas fa-phone"></i> {{ .phone }}
+                            </a>
                         </div>
                         {{ end }}
                     </div>
@@ -128,76 +138,132 @@
         </section>
         {{ end }}
 
-        <!-- Events Section -->
-        {{ if .Params.show_events }}
-        <section class="events-section">
+        <!-- Statistics Section -->
+        {{ if .Site.Data.homepage.stats }}
+        <section class="stats-section">
             <div class="section-header">
-                <h2>Upcoming Events</h2>
-                <p>Join us for health and wellness events</p>
+                <h2>By the Numbers</h2>
+                <p>Our commitment to excellence in numbers</p>
             </div>
-            <div class="events-grid">
-                {{ range .Site.Params.events }}
-                <div class="event-card">
-                    <div class="event-date">
-                        <span class="day">{{ .date | dateFormat "02" }}</span>
-                        <span class="month">{{ .date | dateFormat "Jan" }}</span>
-                    </div>
-                    <div class="event-content">
-                        <h3>{{ .title }}</h3>
-                        <p>{{ .description }}</p>
-                        <div class="event-meta">
-                            <span><i class="fas fa-clock"></i> {{ .time }}</span>
-                            <span><i class="fas fa-map-marker-alt"></i> {{ .location }}</span>
-                        </div>
-                        {{ if .registration_url }}
-                        <a href="{{ .registration_url }}" class="btn btn-outline">Register Now</a>
-                        {{ end }}
-                    </div>
+            <div class="stats-grid">
+                {{ range .Site.Data.homepage.stats }}
+                <div class="stat-card">
+                    <div class="stat-number">{{ .number }}</div>
+                    <div class="stat-label">{{ .label }}</div>
                 </div>
                 {{ end }}
             </div>
         </section>
         {{ end }}
 
-        <!-- Career Section -->
-        {{ if .Params.show_careers }}
-        <section class="careers-section">
+        <!-- Patient Testimonials Section -->
+        <section class="testimonials-section">
             <div class="section-header">
-                <h2>Join Our Team</h2>
-                <p>Explore career opportunities with us</p>
+                <h2>What Our Patients Say</h2>
+                <p>Real experiences from our valued patients</p>
             </div>
-            <div class="careers-content">
-                <div class="careers-text">
-                    <h3>Why Work With Us?</h3>
-                    <ul class="careers-benefits">
-                        {{ range .Site.Params.career_benefits }}
-                        <li><i class="fas fa-check"></i> {{ . }}</li>
-                        {{ end }}
+            <div class="testimonials-grid">
+                {{ range first 6 .Site.Data.testimonials }}
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="stars">
+                            {{ range seq .rating }}
+                            <i class="fas fa-star"></i>
+                            {{ end }}
+                        </div>
+                        <p>"{{ .content }}"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="{{ .image }}" alt="{{ .name }}" loading="lazy">
+                        <div class="author-info">
+                            <h4>{{ .name }}</h4>
+                            <span>{{ .title }}</span>
+                            {{ if .service }}
+                            <span class="service">{{ .service }}</span>
+                            {{ end }}
+                        </div>
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </section>
+
+        <!-- Office Tour / Facilities Section -->
+        <section class="facilities-section">
+            <div class="section-header">
+                <h2>State-of-the-Art Facilities</h2>
+                <p>Modern technology and comfortable environment for optimal care</p>
+            </div>
+            <div class="facilities-content">
+                <div class="facilities-text">
+                    <h3>Advanced Technology</h3>
+                    <p>Our office is equipped with the latest dental technology to provide precise, comfortable, and efficient treatment:</p>
+                    <ul class="facilities-features">
+                        <li><i class="fas fa-check"></i> Digital X-ray systems with 90% less radiation</li>
+                        <li><i class="fas fa-check"></i> Intraoral cameras for detailed examination</li>
+                        <li><i class="fas fa-check"></i> Laser dentistry for minimally invasive procedures</li>
+                        <li><i class="fas fa-check"></i> 3D imaging for precise treatment planning</li>
+                        <li><i class="fas fa-check"></i> Nitrous oxide for patient comfort</li>
+                        <li><i class="fas fa-check"></i> Sterilization systems exceeding industry standards</li>
                     </ul>
                 </div>
-                <div class="current-openings">
-                    <h3>Current Openings</h3>
-                    {{ if .Site.Params.job_openings }}
-                    <div class="job-list">
-                        {{ range .Site.Params.job_openings }}
-                        <div class="job-item">
-                            <h4>{{ .title }}</h4>
-                            <p>{{ .description }}</p>
-                            <div class="job-meta">
-                                <span><i class="fas fa-map-marker-alt"></i> {{ .location }}</span>
-                                <span><i class="fas fa-clock"></i> {{ .type }}</span>
-                            </div>
-                            <a href="{{ .apply_url | default "/contact" }}" class="btn btn-outline">Apply Now</a>
-                        </div>
-                        {{ end }}
-                    </div>
-                    {{ else }}
-                    <p>No current openings. Please check back later or send us your resume for future opportunities.</p>
-                    {{ end }}
+                <div class="facilities-image">
+                    <img src="/images/about/modern-dental-office.jpg" alt="Modern Dental Office" loading="lazy">
                 </div>
             </div>
         </section>
-        {{ end }}
+
+        <!-- Community Involvement Section -->
+        <section class="community-section">
+            <div class="section-header">
+                <h2>Community Involvement</h2>
+                <p>Giving back to our community through oral health education and care</p>
+            </div>
+            <div class="community-grid">
+                <div class="community-card">
+                    <div class="community-icon">
+                        <i class="fas fa-school"></i>
+                    </div>
+                    <h3>School Programs</h3>
+                    <p>We visit local schools to teach children about proper oral hygiene and the importance of dental health.</p>
+                </div>
+                <div class="community-card">
+                    <div class="community-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Charitable Care</h3>
+                    <p>We provide free and reduced-cost dental care to underserved members of our community.</p>
+                </div>
+                <div class="community-card">
+                    <div class="community-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Health Fairs</h3>
+                    <p>Regular participation in community health fairs offering free dental screenings and education.</p>
+                </div>
+                <div class="community-card">
+                    <div class="community-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Professional Development</h3>
+                    <p>We mentor dental students and residents, contributing to the next generation of dental professionals.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact CTA Section -->
+        <section class="about-cta">
+            <div class="cta-content">
+                <h2>Ready to Experience the StarDentic Difference?</h2>
+                <p>Our compassionate team is here to provide you with exceptional dental care in a comfortable, modern environment. Schedule your appointment today and discover why thousands of patients trust us with their oral health.</p>
+                <div class="cta-buttons">
+                    <a href="{{ "contact" | relURL }}" class="btn btn-primary">Schedule Appointment</a>
+                    <a href="tel:{{ .Site.Params.phone }}" class="btn btn-outline">
+                        <i class="fas fa-phone"></i> {{ .Site.Params.phone }}
+                    </a>
+                </div>
+            </div>
+        </section>
     </div>
 </div>
 {{ end }}

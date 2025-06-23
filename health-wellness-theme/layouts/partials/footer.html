@@ -5,17 +5,18 @@
             <div class="footer-column">
                 <div class="footer-logo">
                     {{ if .Site.Params.logo }}
-                        <img src="{{ .Site.Params.logo }}" alt="{{ .Site.Title }}">
+                        <img src="{{ .Site.Params.logo }}" alt="{{ .Site.Title }}" width="180" height="60">
                     {{ else }}
                         <h3>{{ .Site.Title }}</h3>
                     {{ end }}
                 </div>
                 <p>{{ .Site.Params.description | default "Your trusted partner in health and wellness. Providing quality care with compassion and expertise." }}</p>
                 <div class="social-links">
-                    {{ with .Site.Params.social.facebook }}<a href="{{ . }}" target="_blank"><i class="fab fa-facebook"></i></a>{{ end }}
-                    {{ with .Site.Params.social.twitter }}<a href="{{ . }}" target="_blank"><i class="fab fa-twitter"></i></a>{{ end }}
-                    {{ with .Site.Params.social.instagram }}<a href="{{ . }}" target="_blank"><i class="fab fa-instagram"></i></a>{{ end }}
-                    {{ with .Site.Params.social.linkedin }}<a href="{{ . }}" target="_blank"><i class="fab fa-linkedin"></i></a>{{ end }}
+                    {{ with .Site.Params.social.facebook }}<a href="{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Facebook"><i class="fab fa-facebook"></i></a>{{ end }}
+                    {{ with .Site.Params.social.twitter }}<a href="{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Twitter"><i class="fab fa-twitter"></i></a>{{ end }}
+                    {{ with .Site.Params.social.instagram }}<a href="{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a>{{ end }}
+                    {{ with .Site.Params.social.linkedin }}<a href="{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="Connect with us on LinkedIn"><i class="fab fa-linkedin"></i></a>{{ end }}
+                    {{ with .Site.Params.social.youtube }}<a href="{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to our YouTube channel"><i class="fab fa-youtube"></i></a>{{ end }}
                 </div>
             </div>
 
@@ -23,20 +24,27 @@
             <div class="footer-column">
                 <h4>Quick Links</h4>
                 <ul>
-                    <li><a href="{{ .Site.BaseURL }}">Home</a></li>
-                    <li><a href="{{ "about" | relURL }}">About Us</a></li>
-                    <li><a href="{{ "services" | relURL }}">Our Services</a></li>
-                    <li><a href="{{ "contact" | relURL }}">Contact</a></li>
-                    <li><a href="{{ "blog" | relURL }}">Health Blog</a></li>
+                    {{ range .Site.Menus.main }}
+                    <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+                    {{ end }}
+                    <li><a href="{{ "privacy" | relURL }}">Privacy Policy</a></li>
+                    <li><a href="{{ "terms" | relURL }}">Terms of Service</a></li>
                 </ul>
             </div>
 
-            <!-- Column 3: Services -->
+            <!-- Column 3: Our Services -->
             <div class="footer-column">
                 <h4>Our Services</h4>
                 <ul>
-                    {{ range .Site.Params.footer_services }}
-                    <li><a href="{{ .url }}">{{ .name }}</a></li>
+                    {{ if .Site.Menus.footer_services }}
+                        {{ range .Site.Menus.footer_services }}
+                        <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+                        {{ end }}
+                    {{ else }}
+                        <!-- Fallback to first 6 services from data -->
+                        {{ range first 6 .Site.Data.homepage.home_services }}
+                        <li><a href="{{ .url }}">{{ .title }}</a></li>
+                        {{ end }}
                     {{ end }}
                 </ul>
             </div>
@@ -45,35 +53,63 @@
             <div class="footer-column">
                 <h4>Contact Information</h4>
                 <div class="contact-info">
+                    {{ with .Site.Params.address }}
                     <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>{{ .Site.Params.address }}</span>
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                        <span>{{ . }}</span>
                     </div>
+                    {{ end }}
+                    
+                    {{ with .Site.Params.phone }}
                     <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <span><a href="tel:{{ .Site.Params.phone }}">{{ .Site.Params.phone }}</a></span>
+                        <i class="fas fa-phone" aria-hidden="true"></i>
+                        <span><a href="tel:{{ . }}">{{ . }}</a></span>
                     </div>
+                    {{ end }}
+                    
+                    {{ with .Site.Params.emergency_phone }}
+                    <div class="contact-item emergency">
+                        <i class="fas fa-ambulance" aria-hidden="true"></i>
+                        <span>Emergency: <a href="tel:{{ . }}">{{ . }}</a></span>
+                    </div>
+                    {{ end }}
+                    
+                    {{ with .Site.Params.email }}
                     <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <span><a href="mailto:{{ .Site.Params.email }}">{{ .Site.Params.email }}</a></span>
+                        <i class="fas fa-envelope" aria-hidden="true"></i>
+                        <span><a href="mailto:{{ . }}">{{ . }}</a></span>
                     </div>
+                    {{ end }}
+                    
+                    {{ with .Site.Params.hours }}
                     <div class="contact-item">
-                        <i class="fas fa-clock"></i>
-                        <span>{{ .Site.Params.hours }}</span>
+                        <i class="fas fa-clock" aria-hidden="true"></i>
+                        <span>{{ . }}</span>
                     </div>
+                    {{ end }}
                 </div>
 
-                <!-- Newsletter -->
+                <!-- Newsletter Signup -->
                 <div class="newsletter">
-                    <h5>Newsletter</h5>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="Your email address" required>
-                        <button type="submit">Subscribe</button>
+                    <h5>Health Newsletter</h5>
+                    <p>Get health tips and updates delivered to your inbox.</p>
+                    <form class="newsletter-form" action="#" method="POST">
+                        <label for="footer-newsletter-email" class="sr-only">Email Address</label>
+                        <input 
+                            type="email" 
+                            id="footer-newsletter-email" 
+                            name="email" 
+                            placeholder="Your email address" 
+                            required
+                            autocomplete="email"
+                        >
+                        <button type="submit" aria-label="Subscribe to newsletter">Subscribe</button>
                     </form>
                 </div>
             </div>
         </div>
 
+        <!-- Footer Bottom -->
         <div class="footer-bottom">
             <div class="copyright">
                 <p>&copy; {{ now.Year }} {{ .Site.Title }}. All rights reserved.</p>
@@ -81,8 +117,76 @@
             <div class="footer-links">
                 <a href="{{ "privacy" | relURL }}">Privacy Policy</a>
                 <a href="{{ "terms" | relURL }}">Terms of Service</a>
+                <a href="{{ "accessibility" | relURL }}">Accessibility</a>
                 <a href="{{ "sitemap.xml" | relURL }}">Sitemap</a>
+            </div>
+            <div class="footer-certifications">
+                <span class="certification">
+                    <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                    HIPAA Compliant
+                </span>
+                <span class="certification">
+                    <i class="fas fa-award" aria-hidden="true"></i>
+                    ADA Member
+                </span>
             </div>
         </div>
     </div>
 </footer>
+
+<!-- Scroll to Top Button (injected by JavaScript) -->
+<div class="scroll-progress"></div>
+
+<!-- Structured Data for Organization -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DentalClinic",
+  "name": "{{ .Site.Title }}",
+  "description": "{{ .Site.Params.description }}",
+  "url": "{{ .Site.BaseURL }}",
+  {{ with .Site.Params.phone }}
+  "telephone": "{{ . }}",
+  {{ end }}
+  {{ with .Site.Params.address }}
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "{{ . }}"
+  },
+  {{ end }}
+  {{ with .Site.Params.hours }}
+  "openingHours": [
+    "Mo-Fr 08:00-18:00",
+    "Sa 09:00-14:00"
+  ],
+  {{ end }}
+  {{ with .Site.Params.email }}
+  "email": "{{ . }}",
+  {{ end }}
+  "priceRange": "$$",
+  {{ if .Site.Params.social }}
+  "sameAs": [
+    {{ with .Site.Params.social.facebook }}"{{ . }}"{{ end }}
+    {{ with .Site.Params.social.twitter }},{{ if .Site.Params.social.facebook }} {{ end }}"{{ . }}"{{ end }}
+    {{ with .Site.Params.social.instagram }},{{ if or .Site.Params.social.facebook .Site.Params.social.twitter }} {{ end }}"{{ . }}"{{ end }}
+    {{ with .Site.Params.social.linkedin }},{{ if or .Site.Params.social.facebook .Site.Params.social.twitter .Site.Params.social.instagram }} {{ end }}"{{ . }}"{{ end }}
+  ],
+  {{ end }}
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Dental Services",
+    "itemListElement": [
+      {{ range $index, $service := .Site.Data.homepage.home_services }}
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "{{ .title }}",
+          "description": "{{ .description }}"
+        }
+      }{{ if ne $index (sub (len $.Site.Data.homepage.home_services) 1) }},{{ end }}
+      {{ end }}
+    ]
+  }
+}
+</script>
