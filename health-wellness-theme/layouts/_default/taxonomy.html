@@ -1,0 +1,54 @@
+{{ define "main" }}
+<div class="page-header">
+    <div class="container">
+        <h1>{{ .Title }}</h1>
+        {{ with .Params.description }}
+        <p class="page-description">{{ . }}</p>
+        {{ else }}
+        <p class="page-description">{{ .Title | singularize | title }} archive</p>
+        {{ end }}
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="container">
+        <div class="content-wrapper">
+            {{ .Content }}
+            
+            {{ if .Pages }}
+            <div class="posts-grid">
+                {{ range .Pages }}
+                <article class="post-card">
+                    {{ if .Params.featured_image }}
+                    <div class="post-image">
+                        <img src="{{ .Params.featured_image }}" alt="{{ .Title }}" loading="lazy">
+                    </div>
+                    {{ end }}
+                    <div class="post-content">
+                        <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+                        <div class="post-meta">
+                            <span class="post-date">{{ .Date.Format "January 2, 2006" }}</span>
+                            {{ if .Params.category }}
+                            <span class="post-category">{{ .Params.category }}</span>
+                            {{ end }}
+                        </div>
+                        <p>{{ .Summary }}</p>
+                        <a href="{{ .Permalink }}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+                {{ end }}
+            </div>
+            
+            <!-- Pagination -->
+            {{ template "_internal/pagination.html" . }}
+            {{ else }}
+            <div class="no-content">
+                <h2>No content found</h2>
+                <p>There are no posts in this {{ .Title | lower }} yet.</p>
+                <a href="{{ "/" | relURL }}" class="btn btn-primary">← Back to Home</a>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</div>
+{{ end }}
